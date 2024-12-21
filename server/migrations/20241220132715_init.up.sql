@@ -1,0 +1,73 @@
+CREATE TABLE users (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	first_name VARCHAR(20) NOT NULL,
+	last_name VARCHAR(20) NOT NULL,
+	username VARCHAR(50) UNIQUE NOT NULL,
+	password VARCHAR(50),
+	provider ENUM("github") NOT NULL,
+	provider_user_id VARCHAR(255) NOT NULL,
+
+    CHECK (
+        (username IS NOT NULL AND password IS NOT NULL AND provider IS NULL AND provider_user_id IS NULL)
+        OR 
+        (provider IS NOT NULL AND provider_user_id IS NOT NULL AND username IS NULL AND password IS NULL)
+    )
+);
+
+CREATE TABLE teams (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	id VARCHAR(16) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	slug VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE team_members (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	id VARCHAR(16) NOT NULL,
+	user_id INT NOT NULL,
+	team_id INT NOT NULL,
+
+	FOREIGN KEY (user_id) REFERENCES users (pk) ON DELETE CASCADE,
+	FOREIGN KEY (team_id) REFERENCES teams (pk) ON DELETE CASCADE
+);
+
+CREATE TABLE spaces (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	id VARCHAR(16) NOT NULL,
+	team_id INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	slug VARCHAR(50) NOT NULL,
+
+	UNIQUE (team_id, slug),
+	FOREIGN KEY (team_id) REFERENCES teams (pk) ON DELETE CASCADE
+);
+
+CREATE TABLE projects (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	id VARCHAR(16) NOT NULL,
+	space_id INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+
+	FOREIGN KEY (space_id) REFERENCES spaces (pk) ON DELETE CASCADE
+);
+
+CREATE TABLE tasks (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	id VARCHAR(16) NOT NULL,
+	project_id INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+
+	FOREIGN KEY (project_id) REFERENCES projects (pk) ON DELETE CASCADE
+);
+
+CREATE TABLE time_entries (
+	pk INT PRIMARY KEY AUTO_INCREMENT,
+	id VARCHAR(16) NOT NULL,
+	task_id INT NOT NULL,
+	description VARCHAR(100) NOT NULL,
+	start_time DATETIME NOT NULL,
+	end_time DATETIME NOT NULL,
+	is_break BOOLEAN NOT NULL DEFAULT FALSE,
+
+	FOREIGN KEY (task_id) REFERENCES tasks (pk) ON DELETE CASCADE
+);
