@@ -1,9 +1,10 @@
-pub mod auth;
+mod auth;
+mod teams;
 
 use axum::Router;
-use axum::routing::get;
 
-pub fn v1_router() -> Router {
+pub fn router() -> Router {
     Router::new()
-        .nest("/auth", auth::auth_router())
+        .nest("/auth", auth::router())
+        .nest("/teams", teams::router())
 }

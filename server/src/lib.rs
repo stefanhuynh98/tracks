@@ -1,12 +1,22 @@
-pub mod app;
-pub mod error;
-pub mod routes;
-pub mod handlers;
-pub mod auth;
+mod error;
+mod models;
+mod routes;
+mod handlers;
+mod auth;
+mod oauth;
 
-use axum::Router;
+use std::sync::Arc;
 
-pub fn router() -> Router {
+use axum::{Extension, Router};
+use sqlx::MySqlPool;
+use routes::v1;
+
+pub struct Context {
+    pub pool: MySqlPool,
+}
+
+pub fn init_router(ctx: Arc<Context>) -> Router {
     Router::new()
-        .nest("/v1", routes::v1_router())
+        .nest("/v1", v1::router())
+        .layer(Extension(ctx))
 }

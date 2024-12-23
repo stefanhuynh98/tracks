@@ -1,17 +1,9 @@
 CREATE TABLE users (
 	pk INT PRIMARY KEY AUTO_INCREMENT,
-	first_name VARCHAR(20) NOT NULL,
-	last_name VARCHAR(20) NOT NULL,
-	username VARCHAR(50) UNIQUE NOT NULL,
-	password VARCHAR(50),
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
 	provider ENUM("github") NOT NULL,
-	provider_user_id VARCHAR(255) NOT NULL,
-
-    CHECK (
-        (username IS NOT NULL AND password IS NOT NULL AND provider IS NULL AND provider_user_id IS NULL)
-        OR 
-        (provider IS NOT NULL AND provider_user_id IS NOT NULL AND username IS NULL AND password IS NULL)
-    )
+	provider_user_id INT NOT NULL
 );
 
 CREATE TABLE teams (

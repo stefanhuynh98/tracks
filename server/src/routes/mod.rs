@@ -1,3 +1,1 @@
-mod v1;
-
-pub use v1::v1_router;
+pub mod v1;

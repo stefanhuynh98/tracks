@@ -7,14 +7,15 @@ edition = "2021"
 integration_test = []
 
 [dependencies]
-anyhow = "1.0.94"
+anyhow = "1.0.95"
 axum = "0.7.9"
 axum-test = "16.4.1"
 cookie = "0.18.1"
 dotenvy = "0.15.7"
-httpmock = "0.7.0"
+jsonwebtoken = "9.3.0"
+nanoid = "0.4.0"
 reqwest = { version = "0.12.9", features = ["json"] }
 serde = { version = "1.0.216", features = ["derive"] }
-serde_json = "1.0.133"
-thiserror = "2.0.8"
+sqlx = { version = "0.8.2", features = ["mysql", "runtime-tokio"] }
+thiserror = "2.0.9"
 tokio = { version = "1.42.0", features = ["full"] }

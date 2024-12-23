@@ -1,1 +1,1 @@
-mod provider;
+pub mod provider;
