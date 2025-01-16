@@ -1,0 +1,25 @@
+[package]
+name = "tracks"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+"integration_test" = []
+
+[dependencies]
+anyhow = "1.0.95"
+axum = "0.8.1"
+axum-test = "17.1.0"
+cookie = "0.18.1"
+dotenvy_macro = "0.15.7"
+jsonwebtoken = "9.3.0"
+rand = "0.8.5"
+reqwest = { version = "0.12.12", features = ["json"] }
+serde = { version = "1.0.217", features = ["derive"] }
+sqlx = { version = "0.8.3", features = ["runtime-tokio", "mysql", "chrono"] }
+thiserror = "2.0.11"
+tokio = { version = "1.43.0", features = ["macros", "rt-multi-thread"] }
+tower = { version = "0.5.2", features = ["limit"] }
+tower-http = { version = "0.6.2", features = ["trace"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
